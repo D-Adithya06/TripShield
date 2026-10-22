@@ -1,12 +1,19 @@
 
 const navItems = [
-  { icon: "▦", label: "Dashboard", active: true },
-  { icon: "⌑", label: "My Trips", active: false },
-  { icon: "♧", label: "Safety Center", active: false },
-  { icon: "☼", label: "Weather & Alerts", active: false },
+  { icon: "▦", label: "Dashboard" },
+  { icon: "⌑", label: "My Trips" },
+  { icon: "♧", label: "Safety Center" },
+  { icon: "☼", label: "Weather & Alerts" },
 ];
 
-function Sidebar({ activePage = "Dashboard", onNavigate }) {
+function Sidebar({
+  activePage = "Dashboard",
+  onNavigate,
+  profileName = "Traveler",
+  profileEmail = "Personal Account",
+}) {
+  const initial = profileName.trim().charAt(0).toUpperCase() || "T";
+
   return (
     <aside className="sidebar">
       <div className="brand">
@@ -41,14 +48,23 @@ function Sidebar({ activePage = "Dashboard", onNavigate }) {
           <p>Your journey, your safety, all in one place.</p>
         </div>
 
-        <div className="sidebar-profile">
-          <div className="profile-avatar">A</div>
+        <button
+          type="button"
+          className={`sidebar-profile ${
+            activePage === "My Profile" ? "active" : ""
+          }`}
+          onClick={() => onNavigate?.("My Profile")}
+          aria-label="Open your profile"
+        >
+          <div className="profile-avatar">{initial}</div>
+
           <div className="profile-info">
-            <strong>Traveler</strong>
-            <span>Personal Account</span>
+            <strong>{profileName}</strong>
+            <span>{profileEmail}</span>
           </div>
+
           <span className="profile-menu">···</span>
-        </div>
+        </button>
       </div>
     </aside>
   );
